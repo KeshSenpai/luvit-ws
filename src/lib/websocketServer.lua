@@ -14,8 +14,6 @@ function server:new(port)
 			client:emit("serverListen")
 
 			client:on("data", function (data)
-				print(data)
-
 				if (data:sub(1, 3) == "GET") then
 					function client:send(msg)
 						client:write(wsu.assemblePacket(msg))
