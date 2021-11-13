@@ -1,4 +1,4 @@
-package.path = './src/lib/?.lua;./src/lib/modules/?.lua;' .. package.path
+package.path = './deps/luvit-ws/src/lib/?.lua;./deps/luvit-ws/src/lib/modules/?.lua;' .. package.path
 
 local rndm = require('rndm')
 local base64 = require('base64')
