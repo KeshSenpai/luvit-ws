@@ -53,7 +53,7 @@ end
 
 function client:onDisconnect()
     print('[CLIENT] Disconnected')
-    require('timers').setTimeout(1000, function()
+    require('timer').setTimeout(1000, function()
         coroutine.wrap(client.reconnect)()
     end)
 end
