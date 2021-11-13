@@ -6,7 +6,6 @@ local ws = require('luvit-ws')
 
 local server = ws.server:new(3000)
 
-
 function server:onListen()
     print('[SERVER] Waiting for client connections...')
 
