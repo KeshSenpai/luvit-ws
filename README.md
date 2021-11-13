@@ -1,6 +1,6 @@
-#**luvit-ws**
+# **luvit-ws**
 
-####WebSocket Server Example
+#### WebSocket Server Example
 ```lua
 local ws = require('luvit-ws')
 
@@ -34,7 +34,7 @@ end
 ]=]--
 ```
 
-####WebSocket Client Example
+#### WebSocket Client Example
 ```lua
 local ws = require('luvit-ws')
 
