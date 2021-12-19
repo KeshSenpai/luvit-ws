@@ -1,6 +1,6 @@
 local ws = require('./init')
 
-local server = ws.server:new(3000)
+local server = ws.server:new()
 
 function server:onListen()
     print('[SERVER] Waiting for client connections...')
@@ -8,6 +8,7 @@ end
 
 function server:onConnect(client)
     print('Client Connected - ' .. client.uid)
+    table.foreach(client.headers, print)
 end
 
 function server:onDisconnect(client)
@@ -15,14 +16,7 @@ function server:onDisconnect(client)
 end
 
 function server:onMessage(client, message)
-    print(client, message)
+    print(string.format('[CLIENT - %s] [Message - "%s"]', client.uid, message))
 end
 
-require('timer').setInterval(2000, function()
-	coroutine.wrap(function()
-		print('-- CONNECTED CLIENTS --\n')
-		for i,v in next, server:getClients() do
-			print(i,v,v.uid)
-		end
-	end)()
-end)
+server:listen(8000)

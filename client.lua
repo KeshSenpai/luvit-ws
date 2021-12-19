@@ -1,7 +1,6 @@
 local ws = require('./init')
 
--- local connections = ws:connect('wss://ws.keshsenpai.com')
-local client = ws.client:connect('ws://127.0.0.1:3000') -- supports wss too
+local client = ws.client:connect('ws://localhost:8000') -- supports wss too
 
 function client:onConnect()
     print('[CLIENT] Connected')

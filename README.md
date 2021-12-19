@@ -28,10 +28,10 @@ function server:onMessage(client, message)
     print(client, message)
 end
 
-server:connect(3000)
+server:listen(3000)
 
 --[=[
-    server:connect(port)
+    server:listen(port)
     server:sendAll(string)
     server:exit()
 
