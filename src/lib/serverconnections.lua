@@ -31,33 +31,31 @@ setmetatable(connections, {
 			return nil
 		end
 
-
-
 		return rawset(self, key, value)
 	end
 })
 
 events:on("serverListen", function(...)
 	if (type(connections.onListen) == "function") then
-		connections:onListen(...)
+		coroutine.wrap(connections.onListen)(connections, ...)
 	end
 end)
 
 events:on("serverConnect", function(...)
 	if (type(connections.onConnect) == "function") then
-		connections:onConnect(...)
+		coroutine.wrap(connections.onConnect)(connections, ...)
 	end
 end)
 
 events:on("serverDisconnect", function(...)
 	if (type(connections.onDisconnect) == "function") then
-		connections:onDisconnect(...)
+		coroutine.wrap(connections.onDisconnect)(connections, ...)
 	end
 end)
 
 events:on("serverMessage", function(...)
 	if (type(connections.onMessage) == "function") then
-		connections:onMessage(...)
+		coroutine.wrap(connections.onMessage)(connections, ...)
 	end
 end)
 

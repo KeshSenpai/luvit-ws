@@ -1,7 +1,7 @@
 local cWS = require('coro-websocket')
 local parseUrl = cWS.parseUrl
 local connect = cWS.connect
-local connections = require('./connections')
+local connections = _G.luvitwsrequire('./connections')
 
 local websocket = {}
 local connected = false

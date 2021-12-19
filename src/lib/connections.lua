@@ -42,25 +42,25 @@ setmetatable(connections, {
 
 events:on("clientConnect", function(...)
 	if (type(connections.onConnect) == "function") then
-		connections:onConnect(...)
+		coroutine.wrap(connections.onConnect)(connections, ...)
 	end
 end)
 
 events:on("clientDisconnect", function(...)
 	if (type(connections.onDisconnect) == "function") then
-		connections:onDisconnect(...)
+		coroutine.wrap(connections.onDisconnect)(connections, ...)
 	end
 end)
 
 events:on("clientMessage", function(...)
 	if (type(connections.onMessage) == "function") then
-		connections:onMessage(...)
+		coroutine.wrap(connections.onMessage)(connections, ...)
 	end
 end)
 
 events:on("clientError", function(...)
 	if (type(connections.onError) == "function") then
-		connections:onError(...)
+		coroutine.wrap(connections.onError)(connections, ...)
 	end
 end)
 

@@ -1,25 +1,24 @@
 local net = require("net")
-local wsu = require("websocketutils")
-local connections = require('./serverconnections')
+local wsu = _G.luvitwsrequire("./modules/websocketutils")
+local connections = _G.luvitwsrequire('./serverconnections')
 
 local server = {}
 
-function server:new(port)
+function server:new()
 	coroutine.wrap(function()
 		local clients = {}
 
 		local _server = net.createServer(function(client)
 			client.oldBuffer = ''
-
-			client:emit("serverListen")
-
 			client:on("data", function (data)
 				if (data:sub(1, 3) == "GET") then
 					function client:send(msg)
 						client:write(wsu.assemblePacket(msg))
 					end
 
-					client:write(wsu.assembleHandshakeResponse(data))
+					if (not wsu.assembleHandshakeResponse(client, data)) then
+						return client:_end()
+					end
 
 					table.insert(clients, client)
 
@@ -80,9 +79,17 @@ function server:new(port)
 			_server:close()
 		end
 
-		connections.initialize()
+		function connections:close()
+			connections:exit()
+		end
 
-		_server:listen(port)
+		function connections:listen(port)
+			_server:listen(port)
+			connections.listen = nil
+			connections:emit("serverListen")
+		end
+
+		connections.initialize()
 	end)()
 
 	return connections
