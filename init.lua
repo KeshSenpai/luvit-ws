@@ -1,11 +1,8 @@
-package.path = './deps/luvit-ws/src/lib/?.lua;./deps/luvit-ws/src/lib/modules/?.lua;' .. package.path
-
 local rndm = require('rndm')
 local base64 = require('base64')
 local acceptKey = require('websocket-codec').acceptKey
 
 require('websocket-codec').handshake = function(options, request)
-    -- Generate 20 bytes of pseudo-random data
     local key = rndm.base36(16)
     key = base64.encode(key)
     local host = options.host
@@ -55,7 +52,45 @@ table.find = function(self, index)
     return nil
 end
 
+function string:split(d)
+    local t = {}
+    local _ = ''
+
+    d = tostring(d)
+
+    self:gsub('.', function (s)
+        _ = _ .. s
+
+        if (s == d) then
+            if ((_:len() - 1) >= 1) then
+                table.insert(t, _:sub(0, -2))
+            end
+
+            _ = ''
+        end
+
+        return s
+    end)
+
+    if (_ ~= '') then table.insert(t, _) end
+
+    return t
+end
+
+local path = package.loaded.path or require('path')
+local cwd = require('uv').cwd()
+local cwdSplit = cwd:split(path.sep)
+local isWSDir = cwdSplit[#cwdSplit] == 'luvit-ws'
+
+_G.luvitwsrequire = function(module)
+    if (isWSDir) then
+        return require(path.join(cwd, 'src', table.unpack(module:split('/'))))
+    end
+
+    return require(path.join(cwd, 'deps', 'luvit-ws', 'src', table.unpack(module:split('/'))))
+end
+
 return {
-    client = require("./src/lib/websocket"),
-    server = require("./src/lib/websocketServer")
+    client = _G.luvitwsrequire("./websocket"),
+    server = _G.luvitwsrequire("./websocketServer")
 }
