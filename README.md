@@ -1,5 +1,9 @@
 # **luvit-ws**
 
+#### TODO
+- Add a support for luvit's module system
+- Request to get this posted onto luvit's package list
+
 #### WebSocket Server Example
 ```lua
 local ws = require('luvit-ws')
