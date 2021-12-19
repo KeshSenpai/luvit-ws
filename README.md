@@ -8,7 +8,7 @@
 ```lua
 local ws = require('luvit-ws')
 
-local server = ws.server:new(3000)
+local server = ws.server:new()
 
 function server:onListen()
     print('[SERVER] Waiting for client connections...')
@@ -28,7 +28,10 @@ function server:onMessage(client, message)
     print(client, message)
 end
 
+server:connect(3000)
+
 --[=[
+    server:connect(port)
     server:sendAll(string)
     server:exit()
 
