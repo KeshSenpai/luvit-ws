@@ -58,7 +58,7 @@ function server:new()
 			client:on('end', function() client:disconnect() end)
 
 			function client:send(msg)
-				client:write(wsu.assemblePacket(msg))
+				client:write(packets:assemble(msg))
 			end
 
 			function client:disconnect()
