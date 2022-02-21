@@ -53,34 +53,19 @@ table.find = function(self, index)
 end
 
 function string:split(d)
-    local t = {}
-    local _ = ''
+	local t = {}
 
-    d = tostring(d)
+	for c in self:gmatch(string.format('[^' .. tostring(d or '') .. ']+')) do
+		table.insert(t, c)
+	end
 
-    self:gsub('.', function (s)
-        _ = _ .. s
-
-        if (s == d) then
-            if ((_:len() - 1) >= 1) then
-                table.insert(t, _:sub(0, -2))
-            end
-
-            _ = ''
-        end
-
-        return s
-    end)
-
-    if (_ ~= '') then table.insert(t, _) end
-
-    return t
+	return t
 end
 
 local path = package.loaded.path or require('path')
 local cwd = require('uv').cwd()
 local cwdSplit = cwd:split(path.sep)
-local isWSDir = cwdSplit[#cwdSplit] == 'luvit-ws'
+local isWSDir = cwdSplit[#cwdSplit]:find('luvit-ws') ~= nil
 
 _G.luvitwsrequire = function(module)
     if (isWSDir) then

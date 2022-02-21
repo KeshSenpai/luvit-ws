@@ -11,7 +11,9 @@
       "creationix/coro-split@v2.0.1",
       "creationix/coro-fs@v2.2.5",
       "creationix/coro-websocket@v3.1.1",
-      "james2doyle/rndm"
+      "james2doyle/rndm",
+			"creationix/websocket-codec",
+			"creationix/base64"
     },
     files = {
       "**.lua",

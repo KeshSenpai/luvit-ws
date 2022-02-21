@@ -8,7 +8,6 @@ end
 
 function server:onConnect(client)
     print('Client Connected - ' .. client.uid)
-    table.foreach(client.headers, print)
 end
 
 function server:onDisconnect(client)
