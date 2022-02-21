@@ -37,7 +37,6 @@ function server:new()
 					local op = packet.opcode
 					local pl = packet.payload
 
-					print(op, pl)
 					if (op == 9) then
 						client:write(encode({ opcode = 0xA, payload = 'pong' }))
 					elseif (op == 3) then
